@@ -35,49 +35,46 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* ギラつくタイトル */
         .gira-title {
             background: linear-gradient(to bottom, #ffffff 0%, #d4af37 40%, #8a6d1c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.6));
         }
-
         .subtitle-red {
             color: #ff3333;
             text-shadow: 1px 1px 0 #000, 0 0 10px rgba(255, 0, 0, 0.8);
         }
 
         /* =========================================
-           キャッチコピーの装飾（合成用）
-           ※ 800pxのコンテナに対して暴力的なデカさに設定
+           キャッチコピー装飾（絶対に見切れない仕様）
         ========================================= */
         .mennaku-base {
             position: absolute;
             font-weight: 900;
             z-index: 20;
-            font-size: 85px; /* 前回の60pxから超巨大化 */
             line-height: 1.05;
             white-space: nowrap;
             writing-mode: vertical-rl;
             text-orientation: upright;
+            /* font-size は JS で画像の高さに合わせて動的に計算する */
         }
 
-        /* 共通の極太黒縁取り（これがないと文字が死ぬ） */
+        /* em単位を使うことで、文字サイズがどう変わっても完璧な比率の太枠を維持する */
         .thick-stroke {
             text-shadow: 
-                -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
-                -6px 0 0 #000, 6px 0 0 #000, 0 -6px 0 #000, 0 6px 0 #000,
-                -8px -8px 0 #000, 8px -8px 0 #000, -8px 8px 0 #000, 8px 8px 0 #000,
-                0 0 20px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,0.8);
+                -0.06em -0.06em 0 #000,  0.06em -0.06em 0 #000,
+                -0.06em  0.06em 0 #000,  0.06em  0.06em 0 #000,
+                -0.09em  0      0 #000,  0.09em  0      0 #000,
+                 0      -0.09em 0 #000,  0       0.09em 0 #000,
+                -0.12em -0.12em 0 #000,  0.12em -0.12em 0 #000,
+                -0.12em  0.12em 0 #000,  0.12em  0.12em 0 #000,
+                0 0 0.3em rgba(0,0,0,1), 0 0 0.6em rgba(0,0,0,0.8);
         }
 
-        /* 色バリエーション */
         .color-white { color: #ffffff; }
         .color-gold  { color: #ffcc00; }
         .color-red   { color: #ff3333; }
-
-        /* 文字ガタガタ用 */
         .char-wrap { display: inline-block; }
 
         /* =========================================
@@ -102,8 +99,6 @@
             transform: scale(0.95);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
-
-        /* アニメーション */
         @keyframes pulse-evil {
             0%, 100% { opacity: 1; text-shadow: 0 0 10px #ff0000; }
             50% { opacity: 0.6; text-shadow: 0 0 25px #ff0000, 0 0 40px #ff0000; }
@@ -113,7 +108,6 @@
 </head>
 <body class="min-h-screen flex flex-col items-center py-6 px-4">
 
-    <!-- ================= ヘッダー ================= -->
     <div class="w-full max-w-lg text-center mb-6">
         <h1 class="text-4xl md:text-6xl font-black mb-2 gira-title leading-tight tracking-tighter">
             ワル<br><span class="text-red-600 drop-shadow-[0_0_10px_rgba(255,0,0,1)] text-5xl md:text-7xl">【極悪】</span><br>Bitcoin
@@ -123,7 +117,6 @@
         </p>
     </div>
 
-    <!-- ================= 使い方のレクチャー（親切なオラオラ） ================= -->
     <div class="w-full max-w-md gokuaku-box p-5 mb-8 text-center">
         <h3 class="text-xl text-yellow-500 font-black mb-4 border-b border-red-800 pb-2 inline-block tracking-widest">▼ 男の流儀 ３箇条 ▼</h3>
         <ul class="text-sm text-gray-300 space-y-3 font-sans font-bold text-left px-4">
@@ -133,7 +126,6 @@
         </ul>
     </div>
 
-    <!-- ================= 画像アップロード ================= -->
     <div class="w-full max-w-md mb-6 relative z-10">
         <label for="imageInput" class="cursor-pointer block gokuaku-box p-8 text-center transition-all duration-300 hover:border-red-500 hover:bg-black">
             <i class="fa-solid fa-camera-retro text-6xl text-gray-500 mb-4 drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]"></i>
@@ -142,24 +134,21 @@
         </label>
     </div>
 
-    <!-- ================= サムネイル領域 ================= -->
     <div id="thumbnail-area" class="hidden flex-col items-center mb-8">
         <p class="text-xs text-red-500 mb-2 font-bold tracking-widest">▼ 選択中のルクス ▼</p>
         <img id="thumbnail-img" class="max-w-[200px] max-h-[200px] object-contain border-2 border-red-800 shadow-[0_0_20px_rgba(255,0,0,0.4)] rounded">
     </div>
 
-    <!-- ================= アクションエリア ================= -->
     <div id="action-area" class="w-full max-w-md flex flex-col items-center opacity-50 pointer-events-none transition-opacity duration-300">
         <div class="mb-4 text-center bg-black/80 px-6 py-2 rounded-full border border-red-900">
             <p class="text-gray-400 font-bold text-sm tracking-widest">俺の慈悲: 残り <span id="free-count" class="text-3xl text-red-500 mx-2 animate-evil">25</span> 回</p>
         </div>
-        
         <button id="btn-generate" class="w-full py-5 rounded-xl font-black text-2xl ora-btn tracking-widest">
             <i class="fa-solid fa-bolt mr-2"></i>魂の刻印を刻む
         </button>
     </div>
 
-    <!-- ================= 【極悪】お布施モーダル ================= -->
+    <!-- お布施モーダル -->
     <div id="payment-modal" class="fixed inset-0 bg-black/98 z-[100] hidden flex-col items-center justify-center p-4">
         <div class="gokuaku-box p-8 rounded-xl max-w-md w-full text-center border-yellow-600">
             <h2 class="text-3xl font-black text-yellow-500 mb-4 tracking-tighter">タダ乗りはここまでだぜ？</h2>
@@ -180,11 +169,10 @@
         </div>
     </div>
 
-    <!-- ================= 降臨（結果表示）モーダル ================= -->
+    <!-- 降臨（結果表示）モーダル -->
     <div id="result-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex-col items-center justify-center p-4 sm:p-8">
         <h2 class="text-4xl md:text-5xl font-black text-white mb-6 gira-title shrink-0 animate-evil">✨ 降 臨 ✨</h2>
         
-        <!-- 画像コンテナ（画面内に完璧に収める） -->
         <div class="relative flex-1 w-full max-w-lg flex items-center justify-center min-h-0 mb-8">
             <img id="result-img" class="max-w-full max-h-full object-contain border-4 border-black shadow-[0_0_40px_rgba(255,0,0,0.6)] bg-black">
         </div>
@@ -209,7 +197,7 @@
         const MAX_FREE_SPINS = 25;
         let currentImageSrc = null; 
         
-        // 【超増量】伝説のキャッチコピー 50連発
+        // 伝説のキャッチコピー 50連発
         const MEIGEN_LIST = [
             "ガイアが俺に<br>もっと輝けと囁いている",
             "一つだけ言える真理がある。<br>「男は黒に染まれ」",
@@ -284,7 +272,6 @@
         }
         updateUI();
 
-        // 1. 画像アップロード処理
         imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -294,31 +281,29 @@
                 thumbnailImg.src = currentImageSrc;
                 thumbnailArea.style.display = 'flex';
                 actionArea.classList.remove('opacity-50', 'pointer-events-none');
-                setTimeout(() => {
-                    actionArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }, 100);
+                setTimeout(() => { actionArea.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
             };
             reader.readAsDataURL(file);
             e.target.value = ''; 
         });
 
-        // 狂気の文字ガタガタ生成
+        // em単位を使って相対的にズラす（文字サイズが変わっても崩れない）
         function createMennakuHTML(textHTML) {
             const lines = textHTML.split('<br>');
             let finalHTML = '';
             lines.forEach(line => {
-                let lineHTML = '<div style="display: inline-block; margin: 0 0.1em;">';
+                let lineHTML = '<div style="display: inline-block; margin: 0 0.05em;">';
                 for(let i = 0; i < line.length; i++) {
                     let char = line[i];
                     if(/[、。？！・「」『』…]/.test(char)) {
-                        lineHTML += `<span class="char-wrap" style="font-size: 0.6em;">${char}</span>`;
+                        lineHTML += `<span class="char-wrap" style="font-size: 0.5em;">${char}</span>`;
                         continue;
                     }
                     let isKanji = /[一-龠]/.test(char);
-                    // 漢字はさらにデカく
                     let scale = isKanji ? (1.1 + Math.random() * 0.4) : (0.8 + Math.random() * 0.3);
-                    let shiftX = (Math.random() - 0.5) * 15; // 横揺れもデカく
-                    lineHTML += `<span class="char-wrap" style="font-size: ${scale}em; transform: translateX(${shiftX}px);">${char}</span>`;
+                    // pxではなくemでズラす
+                    let shiftX = (Math.random() - 0.5) * 0.3; 
+                    lineHTML += `<span class="char-wrap" style="font-size: ${scale}em; transform: translateX(${shiftX}em);">${char}</span>`;
                 }
                 lineHTML += '</div>';
                 finalHTML += lineHTML;
@@ -326,7 +311,6 @@
             return finalHTML;
         }
 
-        // 2. 生成ボタン押下
         btnGenerate.addEventListener('click', async () => {
             if (!isUnlimited && usageCount >= MAX_FREE_SPINS) {
                 document.getElementById('payment-modal').style.display = 'flex';
@@ -348,68 +332,83 @@
             executeGeneration();
         });
 
-        // 3. 【絶対消えない・絶対残らない】完全キャプチャロジック
         async function executeGeneration() {
             if (!currentImageSrc) return;
             
             document.getElementById('loading-overlay').style.display = 'flex';
 
-            // ★文字消滅バグ対策★
-            // 画面外(-9999px)ではなく、「画面の最背面 (z-index: -9999)」に配置する。
-            // これにより、ブラウザは確実に要素をレンダリングし、html2canvasも確実に文字を拾う。
             const captureWrapper = document.createElement('div');
             captureWrapper.style.position = 'absolute';
             captureWrapper.style.top = '0';
             captureWrapper.style.left = '0';
-            captureWrapper.style.zIndex = '-9999'; // ユーザーの目には見えない裏側
-            captureWrapper.style.width = '800px';  // 基準幅（これで文字サイズが固定される）
+            captureWrapper.style.zIndex = '-9999'; 
+            // 高解像度キャプチャのため幅を大きめに設定
+            captureWrapper.style.width = '1200px';  
             captureWrapper.style.backgroundColor = '#000';
             
-            // 画像セット
             const targetImg = new Image();
             targetImg.src = currentImageSrc;
             targetImg.style.width = '100%';
+            targetImg.style.height = 'auto'; // 高さは自動
             targetImg.style.display = 'block';
             captureWrapper.appendChild(targetImg);
 
-            // 一旦DOMに追加してレンダリングさせる
             document.body.appendChild(captureWrapper);
 
-            // 画像ロード待機
+            // 画像のロード完了を待機
             await new Promise((resolve) => {
                 if (targetImg.complete) resolve();
                 else targetImg.onload = resolve;
             });
 
-            // テキスト要素セット（ドデカい文字と極太縁取り）
-            const quoteDiv = document.createElement('div');
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // ★超重要：絶対にハミ出さないフォントサイズ自動計算ロジック★
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             const meigen = MEIGEN_LIST[Math.floor(Math.random() * MEIGEN_LIST.length)];
+            const lines = meigen.split('<br>');
             
-            // 色ランダム決定
+            // 最も長い行の文字数を取得
+            const maxLen = Math.max(...lines.map(l => l.length));
+            
+            // 画像の縦幅と横幅を取得
+            const imgH = targetImg.clientHeight;
+            const imgW = targetImg.clientWidth;
+
+            // 文字が漢字等の装飾で最大1.5倍になることを考慮し、余裕を持った1文字あたりのサイズを算出
+            // 縦幅の90%（上下5%ずつの余白）を上限として計算する
+            const safeFontSizeByHeight = (imgH * 0.9) / (maxLen * 1.5);
+            
+            // 文字が太すぎても画像が隠れてしまうため、画像の横幅に対しても上限を設ける
+            const maxSizeByWidth = imgW * 0.12; 
+
+            // 両方の条件を満たす（ハミ出さない）限界のデカさを決定
+            const finalFontSize = Math.min(safeFontSizeByHeight, maxSizeByWidth);
+
+            const quoteDiv = document.createElement('div');
             const colors = ['color-white', 'color-gold', 'color-red'];
             const selectedColor = colors[Math.floor(Math.random() * colors.length)];
             
             quoteDiv.className = `mennaku-base thick-stroke ${selectedColor}`;
+            quoteDiv.style.fontSize = `${finalFontSize}px`; // 動的計算された最強サイズを適用
             quoteDiv.innerHTML = createMennakuHTML(meigen);
             
-            // 配置ランダム（右か左）
+            // 配置の決定と、安全圏への余白設定
             if (Math.random() > 0.5) {
-                quoteDiv.style.top = '3%';
-                quoteDiv.style.right = '3%';
+                quoteDiv.style.top = '5%';
+                quoteDiv.style.right = '5%';
             } else {
-                quoteDiv.style.top = '3%';
-                quoteDiv.style.left = '3%';
+                quoteDiv.style.top = '5%';
+                quoteDiv.style.left = '5%';
             }
-            // 少し傾ける
-            quoteDiv.style.transform = `rotate(${(Math.random() - 0.5) * 6}deg)`;
+            // はみ出さないように傾きも控えめに調整（-4度 〜 4度）
+            quoteDiv.style.transform = `rotate(${(Math.random() - 0.5) * 8}deg)`;
             
             captureWrapper.appendChild(quoteDiv);
 
-            // フォントやレイアウトのレンダリングを確実に待つ
+            // フォントのレンダリング待機
             await new Promise(resolve => setTimeout(resolve, 500));
 
             try {
-                // キャプチャ実行
                 const canvas = await html2canvas(captureWrapper, {
                     scale: 1.5,
                     useCORS: true,
@@ -433,7 +432,7 @@
                 console.error(error);
                 alert("合成に失敗したぜ。画像がデカすぎるかもしれない。");
             } finally {
-                // ★使い終わったDOMは即座に完全抹消★
+                // 完全抹消
                 if(document.body.contains(captureWrapper)) {
                     document.body.removeChild(captureWrapper);
                 }
@@ -441,7 +440,6 @@
             }
         }
 
-        // モーダル閉じる
         document.getElementById('btn-close-result').addEventListener('click', () => {
             document.getElementById('result-modal').style.display = 'none';
         });
