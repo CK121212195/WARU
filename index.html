@@ -1,448 +1,129 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ワル【極悪】Bitcoin ～千のキャッチコピーより残酷な俺という説得力～</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- html2canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
-    <!-- 魂のフォント: 極太明朝体 (Noto Serif JP) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        /* =========================================
-           極悪オラオラ・UI（赤・黒・金）
-        ========================================= */
-        body {
-            font-family: 'Noto Serif JP', serif;
-            background-color: #050505;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(200, 0, 0, 0.15), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(255, 200, 0, 0.1), transparent 40%),
-                repeating-linear-gradient(45deg, #000 0, #000 2px, #0a0a0a 2px, #0a0a0a 4px);
-            color: #fff;
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
-        .gira-title {
-            background: linear-gradient(to bottom, #ffffff 0%, #d4af37 40%, #8a6d1c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.6));
-        }
-        .subtitle-red {
-            color: #ff3333;
-            text-shadow: 1px 1px 0 #000, 0 0 10px rgba(255, 0, 0, 0.8);
-        }
+<title>
+WARU
+- Bitcoin Street Style -
+</title>
 
-        /* =========================================
-           キャッチコピー装飾（絶対に見切れない仕様）
-        ========================================= */
-        .mennaku-base {
-            position: absolute;
-            font-weight: 900;
-            z-index: 20;
-            line-height: 1.05;
-            white-space: nowrap;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            /* font-size は JS で画像の高さに合わせて動的に計算する */
-        }
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-        /* em単位を使うことで、文字サイズがどう変わっても完璧な比率の太枠を維持する */
-        .thick-stroke {
-            text-shadow: 
-                -0.06em -0.06em 0 #000,  0.06em -0.06em 0 #000,
-                -0.06em  0.06em 0 #000,  0.06em  0.06em 0 #000,
-                -0.09em  0      0 #000,  0.09em  0      0 #000,
-                 0      -0.09em 0 #000,  0       0.09em 0 #000,
-                -0.12em -0.12em 0 #000,  0.12em -0.12em 0 #000,
-                -0.12em  0.12em 0 #000,  0.12em  0.12em 0 #000,
-                0 0 0.3em rgba(0,0,0,1), 0 0 0.6em rgba(0,0,0,0.8);
-        }
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-        .color-white { color: #ffffff; }
-        .color-gold  { color: #ffcc00; }
-        .color-red   { color: #ff3333; }
-        .char-wrap { display: inline-block; }
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap"
+rel="stylesheet">
 
-        /* =========================================
-           UIパーツ
-        ========================================= */
-        .gokuaku-box {
-            background: rgba(10, 0, 0, 0.8);
-            border: 2px solid #800000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.8);
-            border-radius: 8px;
-        }
+<link rel="stylesheet"
+href="style.css">
 
-        .ora-btn {
-            background: linear-gradient(180deg, #b30000 0%, #ff0000 30%, #800000 100%);
-            color: white;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 2px 5px rgba(255,255,255,0.4);
-            border: 2px solid #ff3333;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
-            transition: all 0.2s;
-        }
-        .ora-btn:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
-        @keyframes pulse-evil {
-            0%, 100% { opacity: 1; text-shadow: 0 0 10px #ff0000; }
-            50% { opacity: 0.6; text-shadow: 0 0 25px #ff0000, 0 0 40px #ff0000; }
-        }
-        .animate-evil { animation: pulse-evil 1.5s infinite; }
-    </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-6 px-4">
 
-    <div class="w-full max-w-lg text-center mb-6">
-        <h1 class="text-4xl md:text-6xl font-black mb-2 gira-title leading-tight tracking-tighter">
-            ワル<br><span class="text-red-600 drop-shadow-[0_0_10px_rgba(255,0,0,1)] text-5xl md:text-7xl">【極悪】</span><br>Bitcoin
-        </h1>
-        <p class="text-sm md:text-base font-bold subtitle-red mt-2 tracking-widest">
-            ～千のキャッチコピーより残酷な俺という説得力～
-        </p>
-    </div>
+<body>
 
-    <div class="w-full max-w-md gokuaku-box p-5 mb-8 text-center">
-        <h3 class="text-xl text-yellow-500 font-black mb-4 border-b border-red-800 pb-2 inline-block tracking-widest">▼ 男の流儀 ３箇条 ▼</h3>
-        <ul class="text-sm text-gray-300 space-y-3 font-sans font-bold text-left px-4">
-            <li><span class="text-red-500 text-lg mr-1">壱.</span> ルクス（画像）を選ぶ。自撮りが最強だ。</li>
-            <li><span class="text-red-500 text-lg mr-1">弐.</span> 下の「魂の刻印」ボタンをブチ込む。</li>
-            <li><span class="text-red-500 text-lg mr-1">参.</span> 完成した奇跡を保存（キープ）する。</li>
-        </ul>
-    </div>
+<div id="bg"></div>
 
-    <div class="w-full max-w-md mb-6 relative z-10">
-        <label for="imageInput" class="cursor-pointer block gokuaku-box p-8 text-center transition-all duration-300 hover:border-red-500 hover:bg-black">
-            <i class="fa-solid fa-camera-retro text-6xl text-gray-500 mb-4 drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]"></i>
-            <p class="text-2xl font-black text-white tracking-widest">ルクス（画像）を解放</p>
-            <input type="file" id="imageInput" accept="image/*" class="hidden">
-        </label>
-    </div>
+<header>
 
-    <div id="thumbnail-area" class="hidden flex-col items-center mb-8">
-        <p class="text-xs text-red-500 mb-2 font-bold tracking-widest">▼ 選択中のルクス ▼</p>
-        <img id="thumbnail-img" class="max-w-[200px] max-h-[200px] object-contain border-2 border-red-800 shadow-[0_0_20px_rgba(255,0,0,0.4)] rounded">
-    </div>
+<h1>
 
-    <div id="action-area" class="w-full max-w-md flex flex-col items-center opacity-50 pointer-events-none transition-opacity duration-300">
-        <div class="mb-4 text-center bg-black/80 px-6 py-2 rounded-full border border-red-900">
-            <p class="text-gray-400 font-bold text-sm tracking-widest">俺の慈悲: 残り <span id="free-count" class="text-3xl text-red-500 mx-2 animate-evil">25</span> 回</p>
-        </div>
-        <button id="btn-generate" class="w-full py-5 rounded-xl font-black text-2xl ora-btn tracking-widest">
-            <i class="fa-solid fa-bolt mr-2"></i>魂の刻印を刻む
-        </button>
-    </div>
+WARU
 
-    <!-- お布施モーダル -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/98 z-[100] hidden flex-col items-center justify-center p-4">
-        <div class="gokuaku-box p-8 rounded-xl max-w-md w-full text-center border-yellow-600">
-            <h2 class="text-3xl font-black text-yellow-500 mb-4 tracking-tighter">タダ乗りはここまでだぜ？</h2>
-            <p class="text-gray-300 text-sm mb-6 leading-relaxed font-sans font-bold">
-                俺の慈悲（タダ）は限界（カンスト）だ。<br>
-                続きが見てぇなら、<br>
-                <span class="text-red-500 text-xl block mt-2">SATSで俺の心を燃やしてくれ！</span>
-            </p>
-            <div class="bg-black border border-red-800 p-4 rounded mb-6">
-                <p class="text-xs text-red-500 mb-2 font-sans">▼ 俺へのリスペクト（寄付）アドレス ▼</p>
-                <p class="text-sm md:text-base font-black text-white break-all select-all">
-                    brashridge65@walletofsatoshi.com
-                </p>
-            </div>
-            <button id="btn-paid" class="w-full py-4 bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-black text-2xl rounded shadow-[0_0_20px_rgba(255,215,0,0.5)] active:scale-95 transition-transform">
-                <i class="fa-brands fa-bitcoin mr-2"></i>SATSブチ込んだぜ！
-            </button>
-        </div>
-    </div>
+</h1>
 
-    <!-- 降臨（結果表示）モーダル -->
-    <div id="result-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex-col items-center justify-center p-4 sm:p-8">
-        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 gira-title shrink-0 animate-evil">✨ 降 臨 ✨</h2>
-        
-        <div class="relative flex-1 w-full max-w-lg flex items-center justify-center min-h-0 mb-8">
-            <img id="result-img" class="max-w-full max-h-full object-contain border-4 border-black shadow-[0_0_40px_rgba(255,0,0,0.6)] bg-black">
-        </div>
-        
-        <div class="w-full max-w-sm flex flex-col gap-4 shrink-0">
-            <button id="btn-download" class="w-full py-4 ora-btn rounded-xl text-xl font-black tracking-widest">
-                <i class="fa-solid fa-download mr-2"></i>画像を保存（キープ）
-            </button>
-            <button id="btn-close-result" class="w-full py-4 bg-black border-2 border-gray-600 text-gray-300 active:bg-gray-800 rounded-xl text-lg font-bold tracking-widest">
-                閉じる
-            </button>
-        </div>
-    </div>
+<h2>
 
-    <!-- 全画面ローディング -->
-    <div id="loading-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden flex-col items-center justify-center">
-        <i class="fa-solid fa-skull fa-spin text-7xl text-red-600 mb-6 drop-shadow-[0_0_20px_rgba(255,0,0,0.8)]"></i>
-        <p class="text-3xl font-black text-white tracking-widest animate-pulse text-shadow-md">魂を刻印中...</p>
-    </div>
+BITCOIN STREET STYLE
 
-    <script>
-        const MAX_FREE_SPINS = 25;
-        let currentImageSrc = null; 
-        
-        // 伝説のキャッチコピー 50連発
-        const MEIGEN_LIST = [
-            "ガイアが俺に<br>もっと輝けと囁いている",
-            "一つだけ言える真理がある。<br>「男は黒に染まれ」",
-            "知ってたか？<br>孔雀は堕天使の象徴なんだぜ",
-            "すでにオレの魅力に耐えられない？<br>悪いがオレは変身を<br>あと2回も残している",
-            "俺の行き先？<br>あの太陽にでも聞いてくれ",
-            "AKBとか知らないけど、<br>たぶん全員抱いたぜ",
-            "エレガントに舞い、<br>クレイジーに酔う",
-            "千の言葉より残酷な<br>俺という説得力",
-            "パねぇって言葉は<br>オレのためだけに使え",
-            "君がッ、振り向くまで、<br>伊達ワルをやめないッ！",
-            "俺の影武者もあっちで<br>大統領頑張ってるみたいだな",
-            "神は俺に二つのものを与えた。<br>美貌と、そして……",
-            "月明かりより鋭く、<br>太陽より熱く",
-            "ストリートで死ぬために<br>生まれてきたのかもしれない",
-            "磨き上げた己に<br>伊達ワルの神は裏切らない",
-            "イケメン×伊達ワル<br>激モテの回答完了。",
-            "3秒だ。野郎を倒すのも<br>女をオトすのもな",
-            "今宵は俺のナイトメアで<br>酔えばいい！",
-            "俺のフェザーから<br>鳥人拳を繰り出す！",
-            "連覇を見据えて動き出した<br>キングの後半戦",
-            "常識をぶった斬れ！<br>最高は自分で掴むモノ！",
-            "時代が俺に<br>追いついてきた",
-            "どれだけ背伸びしても、<br>届かない空がある",
-            "俺の行く道が、<br>すなわち最前線",
-            "伊達ワルな才能<br>誰もが嫉妬する俺",
-            "戦場で戦う兵士の気持ちが、<br>オレには分かる",
-            "救急車通ったろ？<br>俺に失神した女が乗ってるよ",
-            "俺のブロマイド、<br>送っといてやったぜ",
-            "無自覚な色気が、<br>夜の街を支配する",
-            "俺がルールだ。<br>文句あるか？",
-            "抱きしめる強さは、<br>愛の深さに比例する",
-            "涙は枯れた。<br>あとは血を流すだけだ",
-            "俺の背中を見ろ。<br>そこが頂点だ",
-            "後悔？そんな言葉、<br>俺の辞書にはねぇ",
-            "昨日までの俺は死んだ。<br>今日から新しい伝説が始まる",
-            "愛を語る前に、<br>俺に溺れてみろ",
-            "冷たい視線も、<br>俺への愛の裏返し",
-            "本能のままに生きる。<br>それが俺のスタイル",
-            "世界を敵に回しても、<br>俺は俺を貫く",
-            "孤独？上等だ。<br>俺は一人で世界と戦う",
-            "愛なんて幻だ。<br>俺が信じるのは俺だけ",
-            "俺の辞書に<br>「妥協」という言葉はない",
-            "俺の魅力に溺れるか、<br>それとも火傷するか",
-            "俺の存在自体が、<br>一つの事件だ",
-            "俺の瞳に映るのは、<br>お前だけじゃない",
-            "俺の愛は、<br>誰にも縛られない",
-            "俺の魂は、<br>常に飢えている",
-            "俺の人生は、俺自身が描く<br>最高のアートだ",
-            "俺の前に道はない。<br>俺の後ろに道はできる",
-            "ルールルル、怖くないよ・・・<br>おいで、子猫ちゃん"
-        ];
+</h2>
 
-        let usageCount = parseInt(localStorage.getItem('waruUsageCount')) || 0;
-        let isUnlimited = localStorage.getItem('waruUnlimited') === 'true';
+<p>
 
-        const imageInput = document.getElementById('imageInput');
-        const thumbnailArea = document.getElementById('thumbnail-area');
-        const thumbnailImg = document.getElementById('thumbnail-img');
-        const actionArea = document.getElementById('action-area');
-        const freeCountSpan = document.getElementById('free-count');
-        const btnGenerate = document.getElementById('btn-generate');
+俺という説得力
 
-        function updateUI() {
-            let left = Math.max(0, MAX_FREE_SPINS - usageCount);
-            if (isUnlimited) {
-                freeCountSpan.textContent = "∞";
-                freeCountSpan.className = "text-3xl text-yellow-500 mx-2 animate-evil";
-            } else {
-                freeCountSpan.textContent = left;
-            }
-        }
-        updateUI();
+</p>
 
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                currentImageSrc = event.target.result;
-                thumbnailImg.src = currentImageSrc;
-                thumbnailArea.style.display = 'flex';
-                actionArea.classList.remove('opacity-50', 'pointer-events-none');
-                setTimeout(() => { actionArea.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
-            };
-            reader.readAsDataURL(file);
-            e.target.value = ''; 
-        });
+</header>
 
-        // em単位を使って相対的にズラす（文字サイズが変わっても崩れない）
-        function createMennakuHTML(textHTML) {
-            const lines = textHTML.split('<br>');
-            let finalHTML = '';
-            lines.forEach(line => {
-                let lineHTML = '<div style="display: inline-block; margin: 0 0.05em;">';
-                for(let i = 0; i < line.length; i++) {
-                    let char = line[i];
-                    if(/[、。？！・「」『』…]/.test(char)) {
-                        lineHTML += `<span class="char-wrap" style="font-size: 0.5em;">${char}</span>`;
-                        continue;
-                    }
-                    let isKanji = /[一-龠]/.test(char);
-                    let scale = isKanji ? (1.1 + Math.random() * 0.4) : (0.8 + Math.random() * 0.3);
-                    // pxではなくemでズラす
-                    let shiftX = (Math.random() - 0.5) * 0.3; 
-                    lineHTML += `<span class="char-wrap" style="font-size: ${scale}em; transform: translateX(${shiftX}em);">${char}</span>`;
-                }
-                lineHTML += '</div>';
-                finalHTML += lineHTML;
-            });
-            return finalHTML;
-        }
 
-        btnGenerate.addEventListener('click', async () => {
-            if (!isUnlimited && usageCount >= MAX_FREE_SPINS) {
-                document.getElementById('payment-modal').style.display = 'flex';
-                return;
-            }
-            if (!isUnlimited) {
-                usageCount++;
-                localStorage.setItem('waruUsageCount', usageCount);
-                updateUI();
-            }
-            executeGeneration();
-        });
+<section id="uploadBox">
 
-        document.getElementById('btn-paid').addEventListener('click', () => {
-            isUnlimited = true;
-            localStorage.setItem('waruUnlimited', 'true');
-            updateUI();
-            document.getElementById('payment-modal').style.display = 'none';
-            executeGeneration();
-        });
+<label class="uploadButton">
 
-        async function executeGeneration() {
-            if (!currentImageSrc) return;
-            
-            document.getElementById('loading-overlay').style.display = 'flex';
+画像を選ぶ
 
-            const captureWrapper = document.createElement('div');
-            captureWrapper.style.position = 'absolute';
-            captureWrapper.style.top = '0';
-            captureWrapper.style.left = '0';
-            captureWrapper.style.zIndex = '-9999'; 
-            // 高解像度キャプチャのため幅を大きめに設定
-            captureWrapper.style.width = '1200px';  
-            captureWrapper.style.backgroundColor = '#000';
-            
-            const targetImg = new Image();
-            targetImg.src = currentImageSrc;
-            targetImg.style.width = '100%';
-            targetImg.style.height = 'auto'; // 高さは自動
-            targetImg.style.display = 'block';
-            captureWrapper.appendChild(targetImg);
+<input
+type="file"
+id="imageInput"
+accept="image/*">
 
-            document.body.appendChild(captureWrapper);
+</label>
 
-            // 画像のロード完了を待機
-            await new Promise((resolve) => {
-                if (targetImg.complete) resolve();
-                else targetImg.onload = resolve;
-            });
+<button id="generateButton">
 
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // ★超重要：絶対にハミ出さないフォントサイズ自動計算ロジック★
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            const meigen = MEIGEN_LIST[Math.floor(Math.random() * MEIGEN_LIST.length)];
-            const lines = meigen.split('<br>');
-            
-            // 最も長い行の文字数を取得
-            const maxLen = Math.max(...lines.map(l => l.length));
-            
-            // 画像の縦幅と横幅を取得
-            const imgH = targetImg.clientHeight;
-            const imgW = targetImg.clientWidth;
+魂を刻む
 
-            // 文字が漢字等の装飾で最大1.5倍になることを考慮し、余裕を持った1文字あたりのサイズを算出
-            // 縦幅の90%（上下5%ずつの余白）を上限として計算する
-            const safeFontSizeByHeight = (imgH * 0.9) / (maxLen * 1.5);
-            
-            // 文字が太すぎても画像が隠れてしまうため、画像の横幅に対しても上限を設ける
-            const maxSizeByWidth = imgW * 0.12; 
+</button>
 
-            // 両方の条件を満たす（ハミ出さない）限界のデカさを決定
-            const finalFontSize = Math.min(safeFontSizeByHeight, maxSizeByWidth);
+</section>
 
-            const quoteDiv = document.createElement('div');
-            const colors = ['color-white', 'color-gold', 'color-red'];
-            const selectedColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            quoteDiv.className = `mennaku-base thick-stroke ${selectedColor}`;
-            quoteDiv.style.fontSize = `${finalFontSize}px`; // 動的計算された最強サイズを適用
-            quoteDiv.innerHTML = createMennakuHTML(meigen);
-            
-            // 配置の決定と、安全圏への余白設定
-            if (Math.random() > 0.5) {
-                quoteDiv.style.top = '5%';
-                quoteDiv.style.right = '5%';
-            } else {
-                quoteDiv.style.top = '5%';
-                quoteDiv.style.left = '5%';
-            }
-            // はみ出さないように傾きも控えめに調整（-4度 〜 4度）
-            quoteDiv.style.transform = `rotate(${(Math.random() - 0.5) * 8}deg)`;
-            
-            captureWrapper.appendChild(quoteDiv);
 
-            // フォントのレンダリング待機
-            await new Promise(resolve => setTimeout(resolve, 500));
+<section id="previewArea">
 
-            try {
-                const canvas = await html2canvas(captureWrapper, {
-                    scale: 1.5,
-                    useCORS: true,
-                    backgroundColor: "#000",
-                    logging: false
-                });
+<div id="canvasWrap">
 
-                const resultDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-                document.getElementById('result-img').src = resultDataUrl;
-                
-                document.getElementById('btn-download').onclick = () => {
-                    const link = document.createElement('a');
-                    link.download = `datewaru_${Date.now()}.jpg`;
-                    link.href = resultDataUrl;
-                    link.click();
-                };
+<canvas id="canvas"></canvas>
 
-                document.getElementById('result-modal').style.display = 'flex';
+</div>
 
-            } catch (error) {
-                console.error(error);
-                alert("合成に失敗したぜ。画像がデカすぎるかもしれない。");
-            } finally {
-                // 完全抹消
-                if(document.body.contains(captureWrapper)) {
-                    document.body.removeChild(captureWrapper);
-                }
-                document.getElementById('loading-overlay').style.display = 'none';
-            }
-        }
+</section>
 
-        document.getElementById('btn-close-result').addEventListener('click', () => {
-            document.getElementById('result-modal').style.display = 'none';
-        });
-    </script>
+
+<section id="downloadArea">
+
+<button id="downloadButton">
+
+画像を保存
+
+</button>
+
+</section>
+
+
+<footer>
+
+<div class="footerTitle">
+
+MEN'S KNUCKLE
+BITCOIN EDITION
+
+</div>
+
+<div>
+
+Powered by SATS
+
+</div>
+
+</footer>
+
+
+<script src="meigen.js"></script>
+
+<script src="profile.js"></script>
+
+<script src="brand.js"></script>
+
+<script src="effect.js"></script>
+
+<script src="app.js"></script>
+
 </body>
 </html>
