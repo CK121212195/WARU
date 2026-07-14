@@ -2,281 +2,329 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ワル【極悪】Bitcoin ～千のキャッチコピーより残酷な俺という説得力～</title>
     
-    <!-- Tailwind CSS (ベースのスタイル用) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- html2canvas (魔法の画像合成ライブラリ) -->
+    <!-- html2canvas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- 魂のフォント (Noto Serif JP: 極太明朝) -->
+    <!-- 魂のフォント: 極太明朝体 (Noto Serif JP) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
     
-    <!-- アイコン (FontAwesome) -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* =========================================
-           俺というSATOSHIを表現する極悪スタイル
+           極悪グランジ・サイバーUI
         ========================================= */
         body {
             font-family: 'Noto Serif JP', serif;
-            background-color: #050505;
+            background-color: #000;
+            /* 狂気のブラッド・グラデーション */
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(255, 0, 0, 0.1), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.1), transparent 25%);
+                radial-gradient(circle at 50% 0%, #300 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #100 0%, transparent 50%),
+                repeating-linear-gradient(45deg, #000 0, #000 2px, #050505 2px, #050505 4px);
             color: #fff;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* ギラギラ輝くタイトル */
+        /* ギラつくタイトル */
         .gira-title {
-            background: linear-gradient(to bottom, #fff 0%, #d4af37 50%, #8a6d1c 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, #ffcc00 40%, #ff0000 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
-            letter-spacing: -2px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8));
         }
 
-        /* サブタイトル (赤黒いオーラ) */
-        .aura-subtitle {
-            color: #ff3333;
-            text-shadow: 2px 2px 0 #000, 0 0 15px rgba(255, 0, 0, 0.8);
-            letter-spacing: 2px;
-        }
-
-        /* 画像合成用の名言テキスト (本家リスペクトの極太装飾) */
-        .mennaku-text {
-            font-family: 'Noto Serif JP', serif;
+        /* =========================================
+           キャッチコピーの装飾（ここがメンナクの命）
+        ========================================= */
+        #quote-text {
+            position: absolute;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
             font-weight: 900;
-            color: #ffffff;
-            /* 悪魔的ドロップシャドウ＆縁取り */
-            text-shadow: 
-                4px 4px 0 #000, -4px -4px 0 #000, 
-                4px -4px 0 #000, -4px 4px 0 #000,
-                0 0 15px rgba(255,255,255,0.8),
-                8px 8px 20px rgba(0,0,0,0.9);
-            letter-spacing: 0.15em;
-            line-height: 1.1;
+            z-index: 20;
             pointer-events: none;
-            font-size: clamp(2rem, 8vw, 4.5rem);
-            z-index: 10;
-        }
-        /* バリエーション（ネオンイエロー） */
-        .text-color-gold { 
-            color: #ffe600; 
-            text-shadow: 4px 4px 0 #000, -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 0 0 15px rgba(255,230,0,0.8), 8px 8px 20px rgba(0,0,0,0.9);
+            /* ベースの文字サイズ（スマホ〜PCで可変） */
+            font-size: clamp(24px, 7vw, 60px);
+            line-height: 1.1;
+            white-space: nowrap;
         }
 
-        /* 配置クラス (ランダムで付与) */
-        .pos-top { top: 5%; left: 50%; transform: translateX(-50%); writing-mode: horizontal-tb; width: 95%; text-align: center; }
-        .pos-bottom { bottom: 5%; left: 50%; transform: translateX(-50%); writing-mode: horizontal-tb; width: 95%; text-align: center; }
-        .pos-left { top: 50%; left: 3%; transform: translateY(-50%); writing-mode: vertical-rl; height: 95%; text-align: center; text-orientation: upright; }
-        .pos-right { top: 50%; right: 3%; transform: translateY(-50%); writing-mode: vertical-rl; height: 95%; text-align: center; text-orientation: upright; }
+        /* 悪魔的な極太縁取り＆ドロップシャドウ */
+        .mennaku-stroke {
+            color: #ffffff;
+            text-shadow: 
+                -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000,
+                -3px 0 0 #000, 3px 0 0 #000, 0 -3px 0 #000, 0 3px 0 #000,
+                -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
+                0 0 15px rgba(255,255,255,0.4), 8px 8px 20px rgba(0,0,0,1);
+        }
+        
+        .mennaku-gold {
+            color: #ffe600;
+            text-shadow: 
+                -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000,
+                -3px 0 0 #000, 3px 0 0 #000, 0 -3px 0 #000, 0 3px 0 #000,
+                -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
+                0 0 15px rgba(255,230,0,0.6), 8px 8px 20px rgba(0,0,0,1);
+        }
 
-        /* オラオラ系ボタン */
+        /* 文字ごとのガタガタ感を出すためのクラス（JSで付与） */
+        .char-wrap {
+            display: inline-block;
+            transition: all 0.1s;
+        }
+
+        /* =========================================
+           UIパーツ
+        ========================================= */
         .ora-btn {
-            background: linear-gradient(135deg, #8b0000 0%, #ff0000 50%, #8b0000 100%);
-            background-size: 200% auto;
+            background: linear-gradient(180deg, #b30000 0%, #ff0000 30%, #800000 100%);
             color: white;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(0,0,0,0.5);
-            border: 2px solid #ff6666;
-            transition: 0.5s;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6), inset 0 2px 5px rgba(255,255,255,0.4);
+            border: 2px solid #ff3333;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-        .ora-btn:hover {
-            background-position: right center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 1), inset 0 0 10px rgba(0,0,0,0.5);
-            transform: scale(1.05);
+        .ora-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.6), inset 0 2px 10px rgba(0,0,0,0.8);
         }
-        .ora-btn:active { transform: scale(0.95); }
 
-        /* カスタムスクロールバー */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #8b0000; border-radius: 5px; }
+        /* プレビューエリア（スマホ画面幅にフィット） */
+        #preview-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            background: #111;
+            box-shadow: 0 0 30px rgba(255,0,0,0.2);
+            border: 1px solid #333;
+        }
 
-        /* 脈打つアニメーション */
+        /* 画像は常にエリア内に収める */
+        #preview-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* 点滅アニメーション */
         @keyframes pulse-evil {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.02); }
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px red; }
+            50% { opacity: 0.6; text-shadow: 0 0 5px red; }
         }
-        .animate-evil { animation: pulse-evil 2s infinite; }
+        .animate-evil { animation: pulse-evil 1.5s infinite; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-12 relative px-4">
+<body class="min-h-screen flex flex-col items-center py-6 px-4">
 
-    <!-- 背景の装飾 -->
-    <div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-
-    <div class="max-w-3xl w-full flex flex-col items-center relative z-10">
-        
-        <!-- ================= ヘッダー ================= -->
-        <h1 class="text-5xl md:text-7xl font-black mb-2 gira-title text-center leading-tight">
-            ワル<span class="text-4xl md:text-5xl text-red-600" style="-webkit-text-fill-color:#ff0000;">【極悪】</span>Bitcoin
+    <!-- ================= ヘッダー ================= -->
+    <div class="w-full max-w-2xl text-center mb-8">
+        <h1 class="text-4xl md:text-6xl font-black mb-2 gira-title leading-tight tracking-tighter">
+            ワル<br><span class="text-red-600 drop-shadow-[0_0_10px_rgba(255,0,0,1)] text-5xl md:text-7xl">【極悪】</span><br>Bitcoin
         </h1>
-        <p class="text-xl md:text-2xl font-bold mb-10 text-center aura-subtitle">
+        <p class="text-sm md:text-lg font-bold text-red-500 mt-2 tracking-widest" style="text-shadow: 1px 1px 0 #000;">
             ～千のキャッチコピーより残酷な俺という説得力～
         </p>
+    </div>
 
-        <!-- ================= 画像アップロード ================= -->
-        <label for="imageInput" class="cursor-pointer bg-black/60 border-4 border-red-900 hover:border-red-500 rounded-lg p-10 w-full text-center transition-all duration-300 mb-8 group shadow-[0_0_30px_rgba(255,0,0,0.2)] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)]">
-            <i class="fa-solid fa-camera-retro text-6xl text-gray-500 group-hover:text-red-500 mb-4 transition-colors"></i>
-            <p class="text-2xl font-black text-gray-300 group-hover:text-white">ルクス（画像）を解放（アップ）する</p>
-            <p class="text-sm text-gray-600 mt-3 font-sans">※俺とお前の秘密だ。サーバーには送んねぇから安心しな</p>
+    <!-- ================= 画像アップロード ================= -->
+    <div class="w-full max-w-md w-full mb-6 relative z-10">
+        <label for="imageInput" class="cursor-pointer block bg-black border-2 border-red-800 rounded-xl p-8 text-center transition-all duration-300 shadow-[0_0_20px_rgba(255,0,0,0.3)] active:bg-gray-900">
+            <i class="fa-solid fa-camera-retro text-5xl text-gray-400 mb-3 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]"></i>
+            <p class="text-xl md:text-2xl font-black text-white tracking-widest">ルクス（画像）を解放</p>
+            <p class="text-xs text-gray-600 mt-2 font-sans">※バグ撲滅済。何度でも上書き可能だぜ</p>
             <input type="file" id="imageInput" accept="image/*" class="hidden">
         </label>
+    </div>
 
-        <!-- ================= プレビュー領域 ================= -->
-        <div id="preview-container" class="relative hidden w-full rounded-sm overflow-hidden shadow-[0_0_50px_rgba(0,0,0,1)] border-2 border-gray-800 bg-black">
-            <img id="preview-img" class="w-full h-auto block object-contain" alt="プレビュー">
-            <!-- 名言が宿る場所 -->
-            <div id="quote-text" class="mennaku-text absolute hidden"></div>
-        </div>
+    <!-- ================= プレビュー領域 ================= -->
+    <div id="preview-container" class="hidden">
+        <img id="preview-img" alt="プレビュー">
+        <!-- 名言が自動生成される場所 -->
+        <div id="quote-text"></div>
+    </div>
 
-        <!-- ================= アクションエリア ================= -->
-        <div id="action-area" class="mt-10 hidden w-full flex flex-col items-center">
-            <div class="mb-4 text-center">
-                <p class="text-gray-400 font-bold text-lg">俺の慈悲（タダ）: 残り <span id="free-count" class="text-4xl text-red-500 mx-2 animate-evil">25</span> 回</p>
-            </div>
-            
-            <button id="btn-generate" class="w-full md:w-4/5 py-5 rounded-full font-black text-2xl md:text-3xl ora-btn tracking-widest">
-                <i class="fa-solid fa-fire-flame-curved mr-3"></i>魂の刻印を刻む
-            </button>
+    <!-- ================= アクションエリア ================= -->
+    <div id="action-area" class="mt-8 hidden w-full max-w-md flex flex-col items-center">
+        <div class="mb-4 text-center bg-black/80 px-6 py-2 rounded-full border border-gray-800">
+            <p class="text-gray-300 font-bold text-sm md:text-base tracking-widest">俺の慈悲: 残り <span id="free-count" class="text-2xl md:text-3xl text-red-500 mx-1 animate-evil">25</span> 回</p>
         </div>
+        
+        <button id="btn-generate" class="w-full py-4 rounded-xl font-black text-xl md:text-2xl ora-btn tracking-widest">
+            <i class="fa-solid fa-bolt mr-2"></i>魂の刻印を刻む
+        </button>
     </div>
 
     <!-- ================= 【極悪】お布施モーダル ================= -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-500 px-4">
-        <div class="bg-[#111] p-8 md:p-12 rounded-xl max-w-2xl w-full border-4 border-[#d4af37] text-center shadow-[0_0_100px_rgba(212,175,55,0.3)] relative" id="payment-modal-content">
+    <div id="payment-modal" class="fixed inset-0 bg-black/95 z-[100] hidden flex flex-col items-center justify-center p-4">
+        <div class="bg-[#111] p-6 md:p-10 rounded-xl max-w-lg w-full border-2 border-yellow-600 text-center shadow-[0_0_50px_rgba(255,215,0,0.2)]">
             
-            <h2 class="text-4xl font-black text-[#d4af37] mb-4 drop-shadow-lg">おいおい、タダ乗りはここまでだぜ？</h2>
+            <h2 class="text-2xl md:text-3xl font-black text-yellow-500 mb-4 tracking-tighter">タダ乗りはここまでだぜ？</h2>
             
-            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
-                俺の慈悲（タダ）は25回で限界（カンスト）だ。<br>
-                これ以上、俺の魂を震わせたいなら、<br>
-                <span class="text-red-500 font-bold text-2xl">SATSで俺の心（ハート）を燃やしてくれよ！</span>
+            <p class="text-gray-300 text-sm md:text-base mb-6 leading-relaxed font-sans font-bold">
+                俺の慈悲（タダ）は限界（カンスト）だ。<br>
+                続きが見てぇなら、<br>
+                <span class="text-red-500 text-lg md:text-xl">SATSで俺の心（ハート）を燃やしてくれ！</span>
             </p>
 
-            <div class="bg-black border border-gray-700 p-6 rounded-lg mb-6">
-                <p class="text-sm text-gray-500 mb-2">▼ 俺へのリスペクト（寄付）アドレス ▼</p>
-                <p class="text-xl md:text-3xl font-black text-white break-all select-all text-center" id="my-address">
+            <div class="bg-black border border-gray-800 p-4 rounded mb-6">
+                <p class="text-xs text-gray-500 mb-2 font-sans">▼ 俺へのリスペクト（寄付）アドレス ▼</p>
+                <p class="text-sm md:text-lg font-black text-white break-all select-all">
                     brashridge65@walletofsatoshi.com
                 </p>
-                <button onclick="copyAddress()" class="mt-4 px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded text-sm transition">
-                    <i class="fa-solid fa-copy mr-2"></i>アドレスをパクる（コピー）
-                </button>
-                <p id="copy-msg" class="text-green-500 text-sm mt-2 font-bold hidden">コピー完了！ウォレットにブチ込め！</p>
             </div>
             
-            <p class="text-sm text-gray-500 mb-6 font-sans">
-                ※システム上、送金の自動確認はできねぇ。<br>
-                俺とお前の絆（トラスト）だ。送ったら下のボタンを押してくれ。ウソついたら地獄の果てまで追いつめるぜ？
+            <p class="text-xs text-gray-500 mb-6 font-sans">
+                ※俺とお前の絆（トラスト）だ。送ったら下のボタンを押せ。ウソついたら地獄の果てまで追いつめるぜ？
             </p>
 
-            <button id="btn-paid" class="w-full py-4 bg-gradient-to-r from-yellow-600 to-yellow-400 hover:from-yellow-500 hover:to-yellow-300 text-black font-black text-2xl rounded shadow-[0_0_20px_rgba(255,215,0,0.5)] transition-transform hover:scale-105">
-                <i class="fa-brands fa-bitcoin mr-2"></i>SATSをブチ込んだぜ！（自己申告）
+            <button id="btn-paid" class="w-full py-4 bg-gradient-to-r from-yellow-600 to-yellow-400 text-black font-black text-xl md:text-2xl rounded shadow-[0_0_15px_rgba(255,215,0,0.5)] active:scale-95 transition-transform">
+                <i class="fa-brands fa-bitcoin mr-2"></i>SATSブチ込んだぜ！
             </button>
         </div>
     </div>
 
     <!-- ================= 降臨（結果表示）モーダル ================= -->
-    <div id="result-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 hidden flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <h2 class="text-5xl font-black text-white mb-8 gira-title animate-evil">✨ 降 臨 ✨</h2>
+    <div id="result-modal" class="fixed inset-0 bg-black/98 z-[100] hidden flex flex-col items-center justify-start pt-10 px-4 overflow-y-auto pb-20">
+        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 gira-title animate-evil tracking-widest">✨ 降 臨 ✨</h2>
         
-        <div class="relative max-w-full md:max-w-[80vw] max-h-[60vh] overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.2)] mb-10 border border-gray-800">
-            <img id="result-img" class="max-w-full max-h-[60vh] object-contain block mx-auto">
+        <div class="w-full max-w-lg mb-8 shadow-[0_0_40px_rgba(255,0,0,0.5)] border-2 border-red-900">
+            <img id="result-img" class="w-full h-auto block">
         </div>
         
-        <div class="flex flex-col md:flex-row gap-6">
-            <button id="btn-download" class="px-10 py-4 ora-btn rounded text-xl font-black min-w-[250px]">
-                <i class="fa-solid fa-download mr-2"></i>画像を保存（キープ）する
+        <div class="w-full max-w-lg flex flex-col gap-4">
+            <button id="btn-download" class="w-full py-4 ora-btn rounded-xl text-lg md:text-xl font-black tracking-widest">
+                <i class="fa-solid fa-download mr-2"></i>画像を保存（キープ）
             </button>
-            <button id="btn-close-result" class="px-10 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded text-white text-xl font-bold transition-colors min-w-[250px]">
+            <button id="btn-close-result" class="w-full py-4 bg-transparent border-2 border-gray-600 text-gray-300 active:bg-gray-800 rounded-xl text-lg font-bold tracking-widest">
                 閉じる
             </button>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // 魂の設定
-        // ==========================================
         const MAX_FREE_SPINS = 25;
-        const MY_LIGHTNING_ADDRESS = "brashridge65@walletofsatoshi.com";
-
-        // 提供された本家名言リスト（全12発）
+        
+        // 伝説のキャッチコピー（改行位置を <br> で指定）
         const MEIGEN_LIST = [
-            "ガイアが俺にもっと輝けと囁いている",
-            "一つだけ言える真理がある。「男は黒に染まれ」",
-            "知ってたか？孔雀は堕天使の象徴なんだぜ",
-            "磨き上げた己に伊達ワルの神は裏切らない",
-            "イケメン×伊達ワル 激モテの回答完了。",
-            "3秒だ。野郎を倒すのも女をオトすのもな",
-            "千の言葉より残酷な俺という説得力",
-            "今宵は俺のナイトメアで酔えばいい！",
-            "すでにオレの魅力に耐えられない？悪いがオレは変身をあと2回も残している",
-            "オレの影武者もあっちで大統領頑張ってるみたいだな",
-            "俺の行き先？あの太陽にでも聞いてくれ",
-            "AKBとか知らないけど、たぶん全部抱いたぜ"
+            "ガイアが俺に<br>もっと輝けと囁いている",
+            "一つだけ言える真理がある。<br>「男は黒に染まれ」",
+            "知ってたか？<br>孔雀は堕天使の象徴なんだぜ",
+            "戦場で戦う兵士の気持ちが、<br>オレには分かる",
+            "すでにオレの魅力に耐えられない？<br>悪いがオレは変身を<br>あと2回も残している",
+            "俺の行き先？<br>あの太陽にでも聞いてくれ",
+            "AKBとか知らないけど、<br>たぶん全員抱いたぜ",
+            "ストリートで死ぬために<br>生まれてきたのかもしれない",
+            "エレガントに舞い、<br>クレイジーに酔う",
+            "千の言葉より残酷な<br>俺という説得力",
+            "パねぇって言葉は<br>オレのためだけに使え",
+            "救急車通ったろ？<br>俺に失神した女が乗ってるよ",
+            "俺のブロマイド、<br>送っといてやったぜ",
+            "君がッ、振り向くまで、<br>伊達ワルをやめないッ！",
+            "ルールルル、怖くないよ・・・<br>おいで、子猫ちゃん"
         ];
 
-        // 状態管理 (ブラウザのローカルストレージに刻む)
         let usageCount = parseInt(localStorage.getItem('waruUsageCount')) || 0;
-        let isUnlimited = localStorage.getItem('waruUnlimited') === 'true'; // お布施済みフラグ
+        let isUnlimited = localStorage.getItem('waruUnlimited') === 'true';
 
-        // DOM Elements
         const imageInput = document.getElementById('imageInput');
         const previewContainer = document.getElementById('preview-container');
         const previewImg = document.getElementById('preview-img');
+        const quoteText = document.getElementById('quote-text');
         const actionArea = document.getElementById('action-area');
         const freeCountSpan = document.getElementById('free-count');
         const btnGenerate = document.getElementById('btn-generate');
-        const paymentModal = document.getElementById('payment-modal');
 
-        // UI初期化
         function updateUI() {
             let left = Math.max(0, MAX_FREE_SPINS - usageCount);
             if (isUnlimited) {
-                freeCountSpan.textContent = "∞ (無限)";
-                freeCountSpan.className = "text-4xl text-yellow-500 mx-2 animate-evil";
+                freeCountSpan.textContent = "∞";
+                freeCountSpan.className = "text-3xl text-yellow-500 mx-1 animate-evil";
             } else {
                 freeCountSpan.textContent = left;
             }
         }
         updateUI();
 
-        // 1. 画像アップ（ルクス解放）処理
+        // 1. 画像アップロード処理（バグ撲滅版）
         imageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
+
+            // ★超重要：前回の文字と画像を確実にリセットする★
+            quoteText.innerHTML = '';
+            quoteText.style.display = 'none';
+            document.getElementById('result-img').src = '';
 
             const reader = new FileReader();
             reader.onload = function(event) {
                 previewImg.src = event.target.result;
                 previewContainer.classList.remove('hidden');
                 actionArea.classList.remove('hidden');
-                document.getElementById('quote-text').style.display = 'none';
                 
+                // スクロール調整（スマホで見やすく）
                 setTimeout(() => {
-                    window.scrollTo({ top: actionArea.offsetTop - 20, behavior: 'smooth' });
-                }, 200);
+                    actionArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }, 100);
             };
             reader.readAsDataURL(file);
+
+            // 同じ画像を連続で選べるようにvalueをリセット
+            e.target.value = '';
         });
 
-        // 2. ボタン押下（魂の刻印）処理
+        // 2. 狂気の文字装飾（ガタガタ・サイズバラバラ）生成ロジック
+        function createMennakuHTML(textHTML) {
+            // <br> で行を分割
+            const lines = textHTML.split('<br>');
+            let finalHTML = '';
+
+            lines.forEach(line => {
+                let lineHTML = '<div style="display: inline-block; margin-left: 0.2em; margin-right: 0.2em;">';
+                
+                for(let i = 0; i < line.length; i++) {
+                    let char = line[i];
+                    
+                    // 記号類は小さく
+                    if(/[、。？！・「」『』…]/.test(char)) {
+                        lineHTML += `<span class="char-wrap" style="font-size: 0.7em;">${char}</span>`;
+                        continue;
+                    }
+                    
+                    // 漢字は巨大化、ひらがな等はランダム
+                    let isKanji = /[一-龠]/.test(char);
+                    let scale = isKanji ? (1.0 + Math.random() * 0.4) : (0.8 + Math.random() * 0.3);
+                    
+                    // 行間方向（左右）へランダムに少しズラす
+                    let shiftX = (Math.random() - 0.5) * 8; 
+                    
+                    lineHTML += `<span class="char-wrap" style="font-size: ${scale}em; transform: translateX(${shiftX}px);">${char}</span>`;
+                }
+                lineHTML += '</div>';
+                finalHTML += lineHTML;
+            });
+            return finalHTML;
+        }
+
+        // 3. 生成ボタン押下
         btnGenerate.addEventListener('click', async () => {
             if (!isUnlimited && usageCount >= MAX_FREE_SPINS) {
-                // タダ乗り終了。お布施モーダルへ
-                showPaymentModal();
+                document.getElementById('payment-modal').classList.remove('hidden');
                 return;
             }
 
-            // 回数カウントアップ
             if (!isUnlimited) {
                 usageCount++;
                 localStorage.setItem('waruUsageCount', usageCount);
@@ -285,109 +333,92 @@
             executeGeneration();
         });
 
-        // 3. お布施モーダル制御
-        function showPaymentModal() {
-            paymentModal.classList.remove('hidden');
-            setTimeout(() => paymentModal.classList.add('opacity-100'), 10);
-        }
-
-        // アドレスをパクる（コピー）機能
-        function copyAddress() {
-            navigator.clipboard.writeText(MY_LIGHTNING_ADDRESS).then(() => {
-                const msg = document.getElementById('copy-msg');
-                msg.classList.remove('hidden');
-                setTimeout(() => msg.classList.add('hidden'), 3000);
-            });
-        }
-
-        // 自己申告突破ボタン
+        // お布施突破ボタン
         document.getElementById('btn-paid').addEventListener('click', () => {
-            // お前を信じるぜ！
             isUnlimited = true;
             localStorage.setItem('waruUnlimited', 'true');
             updateUI();
-            
-            paymentModal.classList.remove('opacity-100');
-            setTimeout(() => {
-                paymentModal.classList.add('hidden');
-                executeGeneration(); // そのまま生成へ
-            }, 300);
+            document.getElementById('payment-modal').classList.add('hidden');
+            executeGeneration();
         });
 
-
-        // 4. 極悪・合成処理（html2canvas）
+        // 4. 画像合成（html2canvas）
         async function executeGeneration() {
-            const quoteEl = document.getElementById('quote-text');
+            // 状態リセット
+            quoteText.style.display = 'none';
+            quoteText.className = '';
             
-            // 名言をランダムチョイス
+            // 名言と色をランダム決定
             const meigen = MEIGEN_LIST[Math.floor(Math.random() * MEIGEN_LIST.length)];
+            const colorClass = Math.random() > 0.3 ? 'mennaku-stroke' : 'mennaku-gold';
             
-            // ギラギラカラーランダム（白 or 金）
-            const colorClass = Math.random() > 0.5 ? 'text-color-gold' : 'text-color-white';
+            // 配置を決定（右寄りか左寄りか）
+            const isRight = Math.random() > 0.5;
             
-            // 配置ランダム（縦横もCSSで自動決定）
-            const posClasses = ['pos-top', 'pos-bottom', 'pos-left', 'pos-right'];
-            const selectedPos = posClasses[Math.floor(Math.random() * posClasses.length)];
+            quoteText.className = colorClass; // 色と極太縁取り
+            
+            // 配置のCSS注入
+            if (isRight) {
+                quoteText.style.top = '5%';
+                quoteText.style.right = '5%';
+                quoteText.style.left = 'auto';
+            } else {
+                quoteText.style.top = '5%';
+                quoteText.style.left = '5%';
+                quoteText.style.right = 'auto';
+            }
 
-            // 要素にセットして表示
-            quoteEl.className = `mennaku-text absolute ${selectedPos} ${colorClass}`;
-            quoteEl.innerHTML = meigen; 
-            quoteEl.style.display = 'block';
+            // 少し斜めにする（狂気のDTPテクニック）
+            const tilt = (Math.random() - 0.5) * 10; // -5度 〜 5度
+            quoteText.style.transform = `rotate(${tilt}deg)`;
 
-            // レンダリング待ち
+            // HTML流し込み
+            quoteText.innerHTML = createMennakuHTML(meigen);
+            quoteText.style.display = 'block';
+
+            // ボタンのUIを待機状態に
+            const originalBtnHTML = btnGenerate.innerHTML;
+            btnGenerate.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>刻印中...';
+            btnGenerate.disabled = true;
+
+            // DOMレンダリングを確実に待つ
             await new Promise(resolve => setTimeout(resolve, 300));
 
-            // 魔術（html2canvas）発動
             try {
-                // ボタンのテキストを一時的に変えて盛り上げる
-                const originalBtnText = btnGenerate.innerHTML;
-                btnGenerate.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>降臨中...';
-
                 const canvas = await html2canvas(previewContainer, {
-                    scale: 2, // 画質マシマシ
+                    scale: 2,
                     useCORS: true,
-                    backgroundColor: null,
+                    backgroundColor: "#000",
                     logging: false
                 });
 
-                // 結果表示
-                const resultDataUrl = canvas.toDataURL('image/png');
+                const resultDataUrl = canvas.toDataURL('image/jpeg', 0.9);
                 document.getElementById('result-img').src = resultDataUrl;
                 
                 // ダウンロード設定
-                const btnDownload = document.getElementById('btn-download');
-                btnDownload.onclick = () => {
+                document.getElementById('btn-download').onclick = () => {
                     const link = document.createElement('a');
-                    link.download = `datewaru_satoshi_${Date.now()}.png`;
+                    link.download = `datewaru_${Date.now()}.jpg`;
                     link.href = resultDataUrl;
                     link.click();
                 };
 
-                // モーダルオープン
-                const resultModal = document.getElementById('result-modal');
-                resultModal.classList.remove('hidden');
-                setTimeout(() => resultModal.classList.add('opacity-100'), 10);
-
-                // ボタン戻す
-                btnGenerate.innerHTML = originalBtnText;
+                document.getElementById('result-modal').classList.remove('hidden');
 
             } catch (error) {
-                console.error("生成失敗:", error);
-                alert("画像がデカすぎるか、何かのエラーだ。別のルクス（画像）で試してくれ。");
-                btnGenerate.innerHTML = '<i class="fa-solid fa-fire-flame-curved mr-3"></i>魂の刻印を刻む';
+                console.error(error);
+                alert("合成失敗。別の画像で試してくれ。");
             } finally {
-                // プレビューのテキストは隠す
-                quoteEl.style.display = 'none';
+                quoteText.style.display = 'none';
+                btnGenerate.innerHTML = originalBtnHTML;
+                btnGenerate.disabled = false;
             }
         }
 
-        // 閉じるボタン
+        // モーダル閉じる
         document.getElementById('btn-close-result').addEventListener('click', () => {
-            const modal = document.getElementById('result-modal');
-            modal.classList.remove('opacity-100');
-            setTimeout(() => modal.classList.add('hidden'), 300);
+            document.getElementById('result-modal').classList.add('hidden');
         });
-
     </script>
 </body>
 </html>
